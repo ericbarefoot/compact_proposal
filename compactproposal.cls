@@ -2,6 +2,12 @@
 %%	Eric Barefoot
 %%	Feb 2018
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	TODO
+%	customize subsection headings - but what should they look like?
+%	add margin and font size functionality
+%	add font selection functionality
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Identification %%
 %% section provides name of class, release date and TeX format.
@@ -13,20 +19,17 @@
 %% 
 
 \LoadClass[12pt]{article}
-\RequirePackage{geometry}
-\RequirePackage{floatflt}
-\RequirePackage{etoolbox}
-\RequirePackage{setspace}
-\RequirePackage{soul}
-\RequirePackage[dvipsnames]{xcolor}
-\RequirePackage{wrapfig}
-\RequirePackage{graphicx}
-\RequirePackage{float}
-\RequirePackage[font = footnotesize]{caption}
-\RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}
-\RequirePackage{enumitem}
-
-\renewcommand{\labelitemi}{$\star$}
+\RequirePackage{geometry}	%	for margins etc
+\RequirePackage{floatflt}	%	for wrapping figures
+\RequirePackage{etoolbox}	%	for if-then statements
+\RequirePackage{setspace}	%	easy doublespacing
+\RequirePackage{soul}		%	for colors and highlighting
+\RequirePackage[dvipsnames]{xcolor}	%	for colors
+\RequirePackage{graphicx}	%	for figure inclusion
+\RequirePackage{float}		% 	for normal floating
+\RequirePackage[font = footnotesize]{caption}	%	for captions
+\RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
+\RequirePackage{enumitem}	%	allows for customizing lists for compactness
 
 \newtoggle{draft}
 \newtoggle{nonotes}
@@ -34,62 +37,72 @@
 %% Options
 %%
 
-\DeclareOption{draft}{\toggletrue{draft}}
-\DeclareOption{final}{\togglefalse{draft}}
-\DeclareOption{nonotes}{\toggletrue{nonotes}}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+%	\DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
+
+%	set toggles for different options which put the document in draft mode (double spaced with extra space.) 
+%	and allows or disallows notes. Also allows for standard options from article.
+
+\DeclareOption{draft}{\toggletrue{draft}}						%	allows draft mode
+\DeclareOption{final}{\togglefalse{draft}\toggletrue{nonotes}}	%	allows a final submission mode
+\DeclareOption{nonotes}{\toggletrue{nonotes}}					%	allow removal of notes
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessOptions\relax
 
 %% More declarations 
 %% 
 
-%\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}
-
-
-\definecolor{lgrey}{gray}{0.75}
+\setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
+\renewcommand{\labelitemi}{$\star$}	%	sets a new list delimiter - a star
+\definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
 \iftoggle{draft}{%
-	\doublespacing
-	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}
-	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}
-	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}
+	\doublespacing	% make double spaced.
+	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
+	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
+	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}					% make note for margin discussion.
+%		make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
 		right = 2.5in,%
 		top = 1in,%
 		bottom = 1in,%
 		papersize = {10in, 11in},%
-		marginparwidth = 2in%
+		marginparwidth = 2in
 	}
 }{%
-	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}
-	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}
-	\newcommand{\mnote}[2]{#1}
+%		sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
+%		and paper size and text size.
 	\geometry{letterpaper, margin=1in}	
+	\renewcommand{\cnote}[1]{}
+	\renewcommand{\pnote}[1]{}
+	\renewcommand{\mnote}[1]{}
 }
 
+%	allows an option to disable notes entirely, but preserve draft mode
 \iftoggle{nonotes}{%
-	\renewcommand{\cnote}[2]{}{}
+	\renewcommand{\cnote}[1]{}
 	\renewcommand{\pnote}[1]{}
+	\renewcommand{\mnote}[1]{}
 }{%
 }
 
-
+% 	customize title to be lower profile and centered at the top.
 \renewcommand{\maketitle}{%
 	{%
-		\centering\large\fontseries{b}\selectfont%
+		\centering\fontseries{b}\selectfont%
 		\@title \\%
 		\rule[1ex]{\textwidth}{0.5pt}%
+%	This is to try to change the behavior to allow author and date to appear or disappear.
 %			\ifboolexpr{ test {\ifdefempty{\author}} and test {\ifdefempty{\date}} } {
 %				\rule[1ex]{\textwidth}{0.5pt}%
 %			}{
 %				\normalsize\fontseries{m}\selectfont\@author{} --- \@date{} \\%
 %				\rule[1ex]{\textwidth}{0.5pt}%
 %			}
-%		\vspace{-1\baselineskip}
 	}
 }
 
+% 	customize section header to be lower profile and centered at the top.
 \renewcommand{\section}{%
 	\@startsection
 	{section}{1}{\z@}{0\baselineskip}%
@@ -97,12 +110,9 @@
 	{\fontseries{b}\selectfont\centering}%
 }
 
+% 	customize itemize to be lower profile.
 \newenvironment{tightitemize}{%
 	\begin{itemize}[noitemsep,nolistsep]
 }{%
 	\end{itemize}
 }
-
-\setcounter{secnumdepth}{0}
-
-
