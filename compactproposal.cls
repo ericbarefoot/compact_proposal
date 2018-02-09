@@ -1,53 +1,108 @@
+%%	LaTeX Class for making pretty compact proposal documents for NSF etc.
+%%	Eric Barefoot
+%%	Feb 2018
+
+
 %% Identification %%
 %% section provides name of class, release date and TeX format.
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{compactproposal}[2018/02/08 Compact Proposal LaTeX class]
 
 %% Preliminary declarations
 %% 
-\LoadClass[12pt,letterpaper,twocolumn]{article}
-\RequirePackage{xcolor}
-\definecolor{redcol}{HTML}{882B21}
-\newcommand{\headlinecolor}{\normalcolor}
+
+\LoadClass[12pt]{article}
+\RequirePackage{geometry}
+\RequirePackage{floatflt}
+\RequirePackage{etoolbox}
+\RequirePackage{setspace}
+\RequirePackage{soul}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{wrapfig}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage[font = footnotesize]{caption}
+\RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}
+\RequirePackage{enumitem}
+
+\renewcommand{\labelitemi}{$\star$}
+
+\newtoggle{draft}
+\newtoggle{nonotes}
 
 %% Options
 %%
 
-\DeclareOption{onecolumn}{\OptionNotUsed}
-\DeclareOption{green}{\renewcommand{\headlinecolor}{\color{green}}}
-\DeclareOption{red}{\renewcommand{\headlinecolor}{\color{redcol}}}
+\DeclareOption{draft}{\toggletrue{draft}}
+\DeclareOption{final}{\togglefalse{draft}}
+\DeclareOption{nonotes}{\toggletrue{nonotes}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 
 %% More declarations 
 %% 
 
+%\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}
+
+
+\definecolor{lgrey}{gray}{0.75}
+
+\iftoggle{draft}{%
+	\doublespacing
+	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}
+	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}
+	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}
+	\geometry{%
+		left = 1in,%
+		right = 2.5in,%
+		top = 1in,%
+		bottom = 1in,%
+		papersize = {10in, 11in},%
+		marginparwidth = 2in%
+	}
+}{%
+	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}
+	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}
+	\newcommand{\mnote}[2]{#1}
+	\geometry{letterpaper, margin=1in}	
+}
+
+\iftoggle{nonotes}{%
+	\renewcommand{\cnote}[2]{}{}
+	\renewcommand{\pnote}[1]{}
+}{%
+}
+
+
 \renewcommand{\maketitle}{%
-	\twocolumn[%
-		\fontsize{50}{60}\fontfamily{phv}\fontseries{b}%
-		\fontshape{sl}\selectfont\headlinecolor
-		\@title
-		\medskip
-		]%
+	{%
+		\centering\large\fontseries{b}\selectfont%
+		\@title \\%
+		\rule[1ex]{\textwidth}{0.5pt}%
+%			\ifboolexpr{ test {\ifdefempty{\author}} and test {\ifdefempty{\date}} } {
+%				\rule[1ex]{\textwidth}{0.5pt}%
+%			}{
+%				\normalsize\fontseries{m}\selectfont\@author{} --- \@date{} \\%
+%				\rule[1ex]{\textwidth}{0.5pt}%
+%			}
+%		\vspace{-1\baselineskip}
+	}
 }
 
 \renewcommand{\section}{%
 	\@startsection
-	{section}{1}{\z@}{-1.5ex plus -1ex minus -.2ex}%
-	{1ex plus .2ex}{\bf\headlinecolor\centering}%
+	{section}{1}{\z@}{0\baselineskip}%
+	{0.1\baselineskip}%
+	{\fontseries{b}\selectfont\centering}%
 }
 
-\renewcommand{\normalsize}{\fontsize{9}{10}\selectfont}
-\setlength{\textwidth}{17.5cm}
-\setlength{\textheight}{22cm}
+\newenvironment{tightitemize}{%
+	\begin{itemize}[noitemsep,nolistsep]
+}{%
+	\end{itemize}
+}
+
 \setcounter{secnumdepth}{0}
 
-%	\newenvironment{\section}{%
-%	  \@startsection
-%	  \setlength\topsep{0pt}
-%	  \setlength\parskip{0pt}
-%	  \begin{center}
-%	}{%
-%	  \end{center}
-%	}
 
