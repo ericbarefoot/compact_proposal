@@ -73,9 +73,9 @@
 %		sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
 %		and paper size and text size.
 	\geometry{letterpaper, margin=1in}	
-	\renewcommand{\cnote}[1]{}
-	\renewcommand{\pnote}[1]{}
-	\renewcommand{\mnote}[1]{}
+	\newcommand{\cnote}[1]{}
+	\newcommand{\pnote}[1]{}
+	\newcommand{\mnote}[1]{}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
@@ -110,9 +110,30 @@
 	{\fontseries{b}\selectfont\centering}%
 }
 
+\renewcommand{\subsection}{%
+	\@startsection
+	{subsection}{1}{\z@}{0\baselineskip}%
+	{0.1\baselineskip}%
+	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
+}
+
 % 	customize itemize to be lower profile.
 \newenvironment{tightitemize}{%
 	\begin{itemize}[noitemsep,nolistsep]
 }{%
 	\end{itemize}
+}
+
+\newenvironment{tightenum}{%
+	\begin{enumerate}[noitemsep,nolistsep]
+}{%
+	\end{enumerate}
+}
+
+\newenvironment{tightcenter}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+}{%
+  \end{center}
 }
