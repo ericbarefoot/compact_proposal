@@ -6,7 +6,7 @@ This is a LaTeX class to make a compact proposal document. It provides easy swit
 
 ##  Usage
 
-Call this document class with `\documentclass{compactproposal}`. It takes the following options (currently):
+Call this document class with `\documentclass{compact_proposal}`. It takes the following options (currently):
 * `draft` - which builds the document with double spacing, an extra margin for notes, and allows three kinds of notes.
 * `nonotes` which disables notes, but preserves spacing and geometry choices.
 * `final` which single spaces, collapses lists, and makes standard 1 inch margins. 

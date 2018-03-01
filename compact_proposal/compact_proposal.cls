@@ -66,7 +66,7 @@
 		right = 2.5in,%
 		top = 1in,%
 		bottom = 1in,%
-		papersize = {10in, 11in},%
+		papersize = {8.5in, 11in},%
 		marginparwidth = 2in
 	}
 }{%
@@ -105,14 +105,14 @@
 % 	customize section header to be lower profile and centered at the top.
 \renewcommand{\section}{%
 	\@startsection
-	{section}{1}{\z@}{0\baselineskip}%
+	{section}{1}{\z@}{0.5\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\selectfont\centering}%
 }
 
 \renewcommand{\subsection}{%
 	\@startsection
-	{subsection}{1}{\z@}{0\baselineskip}%
+	{subsection}{1}{\z@}{0.2\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
