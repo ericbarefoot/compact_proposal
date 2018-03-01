@@ -149,7 +149,7 @@
 			"file": "compact_proposal/compact_proposal.cls",
 			"settings":
 			{
-				"buffer_size": 4497,
+				"buffer_size": 4498,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -239,7 +239,7 @@
 			]
 		]
 	],
-	"build_varint": "PdfLaTeX",
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 214.0,
@@ -427,15 +427,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4497,
+						"buffer_size": 4498,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2228,
-								2228
+								2769,
+								2769
 							]
 						],
 						"settings":
@@ -446,7 +446,7 @@
 							"wrap_width": 100
 						},
 						"translation.x": 0.0,
-						"translation.y": 675.0,
+						"translation.y": 720.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
