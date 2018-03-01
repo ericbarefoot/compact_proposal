@@ -224,3 +224,10 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+
+# backup/old code storage
+*.bak
+
+# sublime files
+*.sublime-project
+*.sublime-workspace
