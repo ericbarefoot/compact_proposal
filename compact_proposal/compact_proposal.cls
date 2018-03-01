@@ -66,7 +66,7 @@
 		right = 2.5in,%
 		top = 1in,%
 		bottom = 1in,%
-		papersize = {10in, 11in},%
+		papersize = {8.5in, 11in},%
 		marginparwidth = 2in
 	}
 }{%
