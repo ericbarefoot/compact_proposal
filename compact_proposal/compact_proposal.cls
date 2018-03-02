@@ -13,7 +13,7 @@
 %% section provides name of class, release date and TeX format.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{compactproposal}[2018/02/08 Compact Proposal LaTeX class]
+\ProvidesClass{compact_proposal}[2018/02/08 Compact Proposal LaTeX class]
 
 %% Preliminary declarations
 %% 
