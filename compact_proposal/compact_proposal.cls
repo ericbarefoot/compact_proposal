@@ -2,21 +2,17 @@
 %%	Eric Barefoot
 %%	Feb 2018
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	TODO
-%	add margin and font size functionality
-%	add font selection functionality
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 %% Identification %%
-%% section provides name of class, release date and TeX format.
-
+%% 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{compact_proposal}[2018/02/08 Compact Proposal LaTeX class]
 
+
+
 %% Preliminary declarations
 %% 
-
 \LoadClass[12pt]{article}
 \RequirePackage{geometry}	%	for margins etc
 \RequirePackage{floatflt}	%	for wrapping figures
@@ -30,33 +26,39 @@
 \RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
 \RequirePackage{kvoptions}
+	\SetupKeyvalOptions{%
+		family=cp,
+		prefix=cp@,
+		}
 \RequirePackage{lineno}
 
 \newtoggle{@draft}
 \newtoggle{@nonotes}
 
-%% Options
+
+
+%% Declare the options
 %%
-
-%	\DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
-
-%	set toggles for different options which put the document in draft mode (double spaced with extra space.) 
-%	and allows or disallows notes. Also allows for standard options from article.
-
-\DeclareOption{draft}{\toggletrue{@draft}}						 %	allows draft mode
-\DeclareOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
-\DeclareOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
+% \DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
+\DeclareVoidOption{draft}{\toggletrue{@draft}}						 %	allows draft mode
+\DeclareVoidOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
+\DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
+\DeclareStringOption[$\star$]{labelitemi}[$\star$]
 \DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
-\ProcessOptions\relax
-% \ProcessKeyvalOptions
+\ProcessKeyvalOptions*
 
-%% More declarations 
+
+
+%% Define Parameters
 %% 
-
 \setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
-\renewcommand{\labelitemi}{$\star$}	%	sets a new list delimiter - a star
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
+
+
+%% Apply the options
+%% 
+\renewcommand{\labelitemi}{\cp@labelitemi}	%	sets a new list delimiter - a star
 
 \iftoggle{@draft}{%
 	\doublespacing	% make double spaced.
@@ -74,8 +76,8 @@
 	}
 	\linenumbers
 }{%
-%		sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
-%		and paper size and text size.
+%	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
+%	and paper size and text size.
 	\geometry{letterpaper, margin=1in}	
 	\newcommand{\cnote}[1]{}
 	\newcommand{\pnote}[1]{}
@@ -106,7 +108,10 @@
 	}
 }
 
-% 	customize section header to be lower profile and centered at the top.
+
+
+%% Customize evironments/section heads, mostly to be lower profile.
+%%
 \renewcommand{\section}{%
 	\@startsection
 	{section}{1}{\z@}{0.5\baselineskip}%
@@ -121,7 +126,6 @@
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
 
-% 	customize itemize to be lower profile.
 \newenvironment{tightitemize}{%
 	\begin{itemize}[noitemsep,nolistsep]
 }{%
