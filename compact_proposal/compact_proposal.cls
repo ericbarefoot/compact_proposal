@@ -29,10 +29,11 @@
 \RequirePackage[font = footnotesize]{caption}	%	for captions
 \RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
+\RequirePackage{kvoptions}
 \RequirePackage{lineno}
 
-\newtoggle{draft}
-\newtoggle{nonotes}
+\newtoggle{@draft}
+\newtoggle{@nonotes}
 
 %% Options
 %%
@@ -42,11 +43,12 @@
 %	set toggles for different options which put the document in draft mode (double spaced with extra space.) 
 %	and allows or disallows notes. Also allows for standard options from article.
 
-\DeclareOption{draft}{\toggletrue{draft}}						%	allows draft mode
-\DeclareOption{final}{\togglefalse{draft}\toggletrue{nonotes}}	%	allows a final submission mode
-\DeclareOption{nonotes}{\toggletrue{nonotes}}					%	allow removal of notes
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
+\DeclareOption{draft}{\toggletrue{@draft}}						 %	allows draft mode
+\DeclareOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
+\DeclareOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
+\DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessOptions\relax
+% \ProcessKeyvalOptions
 
 %% More declarations 
 %% 
@@ -55,7 +57,8 @@
 \renewcommand{\labelitemi}{$\star$}	%	sets a new list delimiter - a star
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
-\iftoggle{draft}{%
+
+\iftoggle{@draft}{%
 	\doublespacing	% make double spaced.
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
@@ -80,7 +83,7 @@
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
-\iftoggle{nonotes}{%
+\iftoggle{@nonotes}{%
 	\renewcommand{\cnote}[1]{}
 	\renewcommand{\pnote}[1]{}
 	\renewcommand{\mnote}[1]{}
