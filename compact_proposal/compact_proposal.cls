@@ -32,8 +32,8 @@
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
 \RequirePackage{kvoptions}
 
-\newtoggle{draft}
-\newtoggle{nonotes}
+\newtoggle{@draft}
+\newtoggle{@nonotes}
 
 %% Options
 %%
@@ -43,10 +43,9 @@
 %	set toggles for different options which put the document in draft mode (double spaced with extra space.) 
 %	and allows or disallows notes. Also allows for standard options from article.
 
-\DeclareOption{draft}{\toggletrue{draft}}						%	allows draft mode
-\DeclareOption{final}{\togglefalse{draft}\toggletrue{nonotes}}	%	allows a final submission mode
-\DeclareOption{nonotes}{\toggletrue{nonotes}}					%	allow removal of notes
-% \DeclareStringOption{listitemi}[$star$]
+\DeclareOption{draft}{\toggletrue{@draft}}						 %	allows draft mode
+\DeclareOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
+\DeclareOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
 \DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessOptions\relax
 % \ProcessKeyvalOptions
@@ -55,24 +54,11 @@
 %% 
 
 \setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
-% \renewcommand{\labelitemi}{\@listitemi}	%	sets a new list delimiter - a star
+\renewcommand{\labelitemi}{$\star$}	%	sets a new list delimiter - a star
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
-%% define keyword argument for listitemi
-% \define@key{listitemi}{<key>}{<function>}
-% \emph setup
-% 88 \ifx\MCS@emph\@empty
-% 89 % \@empty is a predefined macro with empty contents.
-% 90 % the option value of option emph is empty, thus
-% 91 % we do not want a redefinition of \emph.
-% 92 \else
-% 93 \renewcommand*{\emph}[1]{%
-% 94 \textcolor{\MCS@emph}{#1}%
-% 95 }
-% 96 \fi
 
-
-\iftoggle{draft}{%
+\iftoggle{@draft}{%
 	\doublespacing	% make double spaced.
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
@@ -96,7 +82,7 @@
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
-\iftoggle{nonotes}{%
+\iftoggle{@nonotes}{%
 	\renewcommand{\cnote}[1]{}
 	\renewcommand{\pnote}[1]{}
 	\renewcommand{\mnote}[1]{}
