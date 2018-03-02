@@ -224,3 +224,7 @@ TSWLatexianTemp*
 
 # standalone packages
 *.sta
+
+# sublime files
+*.sublime-project
+*.sublime-workspace
