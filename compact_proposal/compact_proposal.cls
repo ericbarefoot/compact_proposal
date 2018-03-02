@@ -13,7 +13,7 @@
 %% section provides name of class, release date and TeX format.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{compactproposal}[2018/02/08 Compact Proposal LaTeX class]
+\ProvidesClass{compact_proposal}[2018/02/08 Compact Proposal LaTeX class]
 
 %% Preliminary declarations
 %% 
@@ -30,6 +30,7 @@
 \RequirePackage[font = footnotesize]{caption}	%	for captions
 \RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
+\RequirePackage{kvoptions}
 
 \newtoggle{draft}
 \newtoggle{nonotes}
@@ -45,15 +46,31 @@
 \DeclareOption{draft}{\toggletrue{draft}}						%	allows draft mode
 \DeclareOption{final}{\togglefalse{draft}\toggletrue{nonotes}}	%	allows a final submission mode
 \DeclareOption{nonotes}{\toggletrue{nonotes}}					%	allow removal of notes
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
+% \DeclareStringOption{listitemi}[$star$]
+\DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessOptions\relax
+% \ProcessKeyvalOptions
 
 %% More declarations 
 %% 
 
 \setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
-\renewcommand{\labelitemi}{$\star$}	%	sets a new list delimiter - a star
+% \renewcommand{\labelitemi}{\@listitemi}	%	sets a new list delimiter - a star
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
+
+%% define keyword argument for listitemi
+% \define@key{listitemi}{<key>}{<function>}
+% \emph setup
+% 88 \ifx\MCS@emph\@empty
+% 89 % \@empty is a predefined macro with empty contents.
+% 90 % the option value of option emph is empty, thus
+% 91 % we do not want a redefinition of \emph.
+% 92 \else
+% 93 \renewcommand*{\emph}[1]{%
+% 94 \textcolor{\MCS@emph}{#1}%
+% 95 }
+% 96 \fi
+
 
 \iftoggle{draft}{%
 	\doublespacing	% make double spaced.
