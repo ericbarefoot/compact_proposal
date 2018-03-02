@@ -32,3 +32,5 @@ Note that the `tex`-tree is everything below `/usr/share/texlive/texmf-dist/`.
 After the above command, a call to hash the `tex`-tree is necessary.
 
     sudo texhash
+    
+    some nonesense
