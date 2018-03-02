@@ -30,6 +30,7 @@
 \RequirePackage[font = footnotesize]{caption}	%	for captions
 \RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
+\RequirePackage{lineno}
 
 \newtoggle{draft}
 \newtoggle{nonotes}
@@ -69,6 +70,7 @@
 		papersize = {10in, 11in},%
 		marginparwidth = 2in
 	}
+	\linenumbers
 }{%
 %		sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
 %		and paper size and text size.
