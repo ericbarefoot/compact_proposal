@@ -44,6 +44,7 @@
 \DeclareVoidOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
 \DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
 \DeclareStringOption[$\star$]{labelitemi}[$\star$]
+\DeclareStringOption{fontspec}
 \DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessKeyvalOptions*
 
@@ -108,6 +109,9 @@
 	}
 }
 
+\ifdefstring{\cp@fontspec}{times}{%
+	\RequirePackage{times}
+}{}
 
 
 %% Customize evironments/section heads, mostly to be lower profile.
