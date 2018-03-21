@@ -17,13 +17,17 @@
 \RequirePackage{geometry}	%	for margins etc
 \RequirePackage{floatflt}	%	for wrapping figures
 \RequirePackage{etoolbox}	%	for if-then statements
+	\tracingpatches 		% turn on for debugging patches
 \RequirePackage{setspace}	%	easy doublespacing
 \RequirePackage{soul}		%	for colors and highlighting
 \RequirePackage[dvipsnames]{xcolor}	%	for colors
 \RequirePackage{graphicx}	%	for figure inclusion
 \RequirePackage{float}		% 	for normal floating
 \RequirePackage[font = footnotesize]{caption}	%	for captions
-\RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
+\RequirePackage[textsize = footnotesize, 
+				linecolor = gray, 
+				bordercolor = white,
+				backgroundcolor = white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
 \RequirePackage{kvoptions}
 	\SetupKeyvalOptions{%
@@ -32,9 +36,9 @@
 		}
 \RequirePackage{lineno}
 
+
 \newtoggle{@draft}
 \newtoggle{@nonotes}
-
 
 
 %% Declare the options
@@ -66,7 +70,7 @@
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
 	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}					% make note for margin discussion.
-%		make a custom page size that allows an extra area for margins.
+%	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
 		right = 2.5in,%
@@ -74,7 +78,8 @@
 		bottom = 1in,%
 		papersize = {10in, 11in},%
 		marginparwidth = 2in
-	}
+	}%
+%	add line numbers in draft mode
 	\linenumbers
 }{%
 %	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
@@ -93,11 +98,20 @@
 }{%
 }
 
-% 	customize title to be lower profile and centered at the top.
+
+\patchcmd{\@maketitle}
+	{\LARGE \@title \par}
+	{\centering\fontseries{b}\selectfont \@title \par}
+
+
+%	customize title to be lower profile and centered at the top.
 \renewcommand{\maketitle}{%
 	{%
 		\centering\fontseries{b}\selectfont%
-		\@title \\%
+
+		\ifdef{\@title}{\@title}{poop}
+		% \@title \\%
+		
 		\rule[1ex]{\textwidth}{0.5pt}%
 %	This is to try to change the behavior to allow author and date to appear or disappear.
 %			\ifboolexpr{ test {\ifdefempty{\author}} and test {\ifdefempty{\date}} } {
@@ -109,6 +123,7 @@
 	}
 }
 
+% font handler options
 \ifdefstring{\cp@fontspec}{times}{%
 	\RequirePackage{times}
 }{}
