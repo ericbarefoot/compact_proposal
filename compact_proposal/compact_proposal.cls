@@ -98,45 +98,52 @@
 }{%
 }
 
-
-\patchcmd{\@maketitle}
-	{\LARGE \@title \par}
-	{\centering\fontseries{b}\selectfont \@title \par}
-
-
-%	customize title to be lower profile and centered at the top.
-\renewcommand{\maketitle}{%
-	{%
-		\centering\fontseries{b}\selectfont%
-
-		\ifdef{\@title}{\@title}{poop}
-		% \@title \\%
-		
-		\rule[1ex]{\textwidth}{0.5pt}%
-%	This is to try to change the behavior to allow author and date to appear or disappear.
-%			\ifboolexpr{ test {\ifdefempty{\author}} and test {\ifdefempty{\date}} } {
-%				\rule[1ex]{\textwidth}{0.5pt}%
-%			}{
-%				\normalsize\fontseries{m}\selectfont\@author{} --- \@date{} \\%
-%				\rule[1ex]{\textwidth}{0.5pt}%
-%			}
-	}
-}
-
-% font handler options
+% font handlers
 \ifdefstring{\cp@fontspec}{times}{%
 	\RequirePackage{times}
 }{}
 
 
-%% Customize evironments/section heads, mostly to be lower profile.
+
+%% Customize title and evironments/section heads, mostly to be lower profile.
 %%
+\let\@emptyauthor\@author % store the values before TeX processing 
+\global\let\@date\@empty  % TeX has already filled @date by now, so empty it
+\let\@emptydate\@date	  % now fill with @date to make @emptydate
+\renewcommand{\@maketitle}{%
+	\newpage%
+	% \begingroup
+	\begin{center}%
+		\let \footnote \thanks%
+		{\fontseries{b}\selectfont \@title}% print the title
+		\ifdefequal{\@author}{\@emptyauthor}% if author is *not* given in doc
+			{}% print nothing
+			{\vskip 0.3ex% big skip = 0.3
+			 \begin{tabular}[t]{c}%
+				 \@author%
+			 \end{tabular}%
+			}%
+		\ifdefequal{\@date}{\@emptydate}% if date is *not* given in doc
+			{}% 
+			{\ifdefequal{\@author}{\@emptyauthor}% check if author was given (determine spacing)
+				{\vskip 0.3ex% big skip = 0.3
+				 \@date}%
+				{\vskip 0.1ex% small skip = 0.1
+				 \@date}%
+			}%
+	\end{center}%
+	\vspace{\dimexpr-2.5\parsep-2.5\parskip\relax}%
+	\rule[1ex]{\textwidth}{0.5pt}%
+}
+
+
 \renewcommand{\section}{%
 	\@startsection
 	{section}{1}{\z@}{0.5\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\selectfont\centering}%
 }
+
 
 \renewcommand{\subsection}{%
 	\@startsection
@@ -145,11 +152,13 @@
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
 
+
 \newenvironment{tightitemize}{%
 	\begin{itemize}[noitemsep,nolistsep]
 }{%
 	\end{itemize}
 }
+
 
 \newenvironment{tightenum}{%
 	\begin{enumerate}[noitemsep,nolistsep]
@@ -157,10 +166,11 @@
 	\end{enumerate}
 }
 
+
 \newenvironment{tightcenter}{%
-  \setlength\topsep{0pt}
-  \setlength\parskip{0pt}
-  \begin{center}
+	\setlength\topsep{0pt}
+	\setlength\parskip{0pt}
+	\begin{center}
 }{%
-  \end{center}
+	\end{center}
 }
