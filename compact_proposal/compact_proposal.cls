@@ -47,7 +47,8 @@
 \DeclareVoidOption{draft}{\toggletrue{@draft}}						 %	allows draft mode
 \DeclareVoidOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
 \DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
-\DeclareStringOption[$\star$]{labelitemi}[$\star$]
+\DeclareStringOption[$\star$]{labelitemi}[$\star$]					 % allow the enum label specification
+\DeclareStringOption{fontspec}										 % allow font specification
 \DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessKeyvalOptions*
 
@@ -96,6 +97,12 @@
 	\renewcommand{\mnote}[1]{}
 }{%
 }
+
+% font handlers
+\ifdefstring{\cp@fontspec}{times}{%
+    \RequirePackage{times}
+}{}
+
 
 
 %% Customize title and evironments/section heads, mostly to be lower profile.
