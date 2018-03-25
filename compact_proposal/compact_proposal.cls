@@ -15,7 +15,7 @@
 %% 
 \LoadClass[12pt]{article}
 \RequirePackage{geometry}	%	for margins etc
-\RequirePackage{floatflt}	%	for wrapping figures
+% \RequirePackage{floatflt}	%	for wrapping figures
 \RequirePackage{etoolbox}	%	for if-then statements
 	\tracingpatches 		% turn on for debugging patches
 \RequirePackage{setspace}	%	easy doublespacing
