@@ -17,13 +17,17 @@
 \RequirePackage{geometry}	%	for margins etc
 \RequirePackage{floatflt}	%	for wrapping figures
 \RequirePackage{etoolbox}	%	for if-then statements
+	\tracingpatches 		% turn on for debugging patches
 \RequirePackage{setspace}	%	easy doublespacing
 \RequirePackage{soul}		%	for colors and highlighting
 \RequirePackage[dvipsnames]{xcolor}	%	for colors
 \RequirePackage{graphicx}	%	for figure inclusion
 \RequirePackage{float}		% 	for normal floating
 \RequirePackage[font = footnotesize]{caption}	%	for captions
-\RequirePackage[textsize=footnotesize, linecolor=gray, bordercolor=white, backgroundcolor=white]{todonotes}	%	allows formatting for margin notes
+\RequirePackage[textsize = footnotesize, 
+				linecolor = gray, 
+				bordercolor = white,
+				backgroundcolor = white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
 \RequirePackage{kvoptions}
 	\SetupKeyvalOptions{%
@@ -32,9 +36,9 @@
 		}
 \RequirePackage{lineno}
 
+
 \newtoggle{@draft}
 \newtoggle{@nonotes}
-
 
 
 %% Declare the options
@@ -65,7 +69,7 @@
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
 	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}					% make note for margin discussion.
-%		make a custom page size that allows an extra area for margins.
+%	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
 		right = 2.5in,%
@@ -73,7 +77,8 @@
 		bottom = 1in,%
 		papersize = {10in, 11in},%
 		marginparwidth = 2in
-	}
+	}%
+%	add line numbers in draft mode
 	\linenumbers
 }{%
 %	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
@@ -92,32 +97,46 @@
 }{%
 }
 
-% 	customize title to be lower profile and centered at the top.
-\renewcommand{\maketitle}{%
-	{%
-		\centering\fontseries{b}\selectfont%
-		\@title \\%
-		\rule[1ex]{\textwidth}{0.5pt}%
-%	This is to try to change the behavior to allow author and date to appear or disappear.
-%			\ifboolexpr{ test {\ifdefempty{\author}} and test {\ifdefempty{\date}} } {
-%				\rule[1ex]{\textwidth}{0.5pt}%
-%			}{
-%				\normalsize\fontseries{m}\selectfont\@author{} --- \@date{} \\%
-%				\rule[1ex]{\textwidth}{0.5pt}%
-%			}
-	}
+
+%% Customize title and evironments/section heads, mostly to be lower profile.
+%%
+\let\@emptyauthor\@author % store the values before TeX processing 
+\global\let\@date\@empty  % TeX has already filled @date by now, so empty it
+\let\@emptydate\@date	  % now fill with @date to make @emptydate
+\renewcommand{\@maketitle}{%
+	\newpage%
+	% \begingroup
+	\begin{center}%
+		\let \footnote \thanks%
+		{\fontseries{b}\selectfont \@title}% print the title
+		\ifdefequal{\@author}{\@emptyauthor}% if author is *not* given in doc
+			{}% print nothing
+			{\vskip 0.3ex% big skip = 0.3
+			 \begin{tabular}[t]{c}%
+				 \@author%
+			 \end{tabular}%
+			}%
+		\ifdefequal{\@date}{\@emptydate}% if date is *not* given in doc
+			{}% 
+			{\ifdefequal{\@author}{\@emptyauthor}% check if author was given (determine spacing)
+				{\vskip 0.3ex% big skip = 0.3
+				 \@date}%
+				{\vskip 0.1ex% small skip = 0.1
+				 \@date}%
+			}%
+	\end{center}%
+	\vspace{\dimexpr-2.5\parsep-2.5\parskip\relax}%
+	\rule[1ex]{\textwidth}{0.5pt}%
 }
 
 
-
-%% Customize evironments/section heads, mostly to be lower profile.
-%%
 \renewcommand{\section}{%
 	\@startsection
 	{section}{1}{\z@}{0.5\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\selectfont\centering}%
 }
+
 
 \renewcommand{\subsection}{%
 	\@startsection
@@ -126,11 +145,13 @@
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
 
+
 \newenvironment{tightitemize}{%
 	\begin{itemize}[noitemsep,nolistsep]
 }{%
 	\end{itemize}
 }
+
 
 \newenvironment{tightenum}{%
 	\begin{enumerate}[noitemsep,nolistsep]
@@ -138,10 +159,11 @@
 	\end{enumerate}
 }
 
+
 \newenvironment{tightcenter}{%
-  \setlength\topsep{0pt}
-  \setlength\parskip{0pt}
-  \begin{center}
+	\setlength\topsep{0pt}
+	\setlength\parskip{0pt}
+	\begin{center}
 }{%
-  \end{center}
+	\end{center}
 }
