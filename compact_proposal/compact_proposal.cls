@@ -45,11 +45,11 @@
 %% Declare the options
 %%
 % \DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
-\DeclareVoidOption{draft}{\toggletrue{@draft}}						 %	allows draft mode
-\DeclareVoidOption{final}{\togglefalse{@draft}\toggletrue{@nonotes}} %	allows a final submission mode
-\DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}					 %	allow removal of notes
-\DeclareStringOption[$\star$]{labelitemi}[$\star$]					 % allow the enum label specification
-\DeclareStringOption{fontspec}										 % allow font specification
+\DeclareVoidOption{draft}{\toggletrue{@draft}}              % allows draft mode
+\DeclareVoidOption{final}{\togglefalse{@draft}}             % allows a final submission mode
+\DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}		    % allow removal of notes
+\DeclareStringOption[$\star$]{labelitemi}[$\star$]			% allow the enum label specification
+\DeclareStringOption{fontspec}								% allow font specification
 \DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessKeyvalOptions*
 
@@ -64,17 +64,39 @@
 %% Define note functions
 %%
 % make note for margin discussion.
-\NewDocumentCommand{\mnote}{O{} m}{%
-    \iftoggle{@draft}{%
+\NewDocumentCommand{\mnote}{o m}{%
+    \nottoggle{@nonotes}{%
+    % if not nonotes:
+        \iftoggle{@draft}{%
         % if draft:
-        {\sethlcolor{lgrey}%
-        \hl{#1}%
-        {\setstretch{1}\todo{#2}}
-        }%
-    }%
-    {%
+            \IfValueTF{#1}%
+            {% if optional given:
+                \sethlcolor{lgrey}%
+                \hl{#1}%
+                {\setstretch{1}\todo{#2}}%
+            }%
+            {% else:
+                {\setstretch{1}\todo{#2}}%
+            }%
+        }{%
         % if not draft:
-        {#1}%
+            \IfValueTF{#1}%
+            {% if optional given:
+                #1%
+            }%
+            {% else:
+                %
+            }%
+        }%
+    }{%
+    % if nonotes:
+        \IfValueTF{#1}%
+            {% if optional given:
+                #1%
+            }%
+            {% else:
+                %
+            }%
     }%
 }%
 
@@ -87,7 +109,6 @@
 	\doublespacing	% make double spaced.
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
-	% \newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}	
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
@@ -102,17 +123,15 @@
 }{%
 %	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
 %	and paper size and text size.
-	\geometry{letterpaper, margin=1in}	
+	\geometry{letterpaper, margin=1in}
 	\newcommand{\cnote}[1]{}
 	\newcommand{\pnote}[1]{}
-	% \newcommand{\mnote}[1]{}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
 \iftoggle{@nonotes}{%
 	\renewcommand{\cnote}[1]{}
 	\renewcommand{\pnote}[1]{}
-	\renewcommand{\mnote}[1]{}
 }{%
 }
 
