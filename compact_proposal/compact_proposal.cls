@@ -64,7 +64,7 @@
 %% Define note functions
 %%
 % make note for margin discussion.
-\NewDocumentCommand{\mmnote}{O{} m}{%
+\NewDocumentCommand{\mnote}{O{} m}{%
     \iftoggle{@draft}{%
         % if draft:
         {\sethlcolor{lgrey}%
@@ -74,7 +74,7 @@
     }%
     {%
         % if not draft:
-        #1%
+        {#1}%
     }%
 }%
 
@@ -87,7 +87,7 @@
 	\doublespacing	% make double spaced.
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
-	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}	
+	% \newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}	
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
@@ -105,7 +105,7 @@
 	\geometry{letterpaper, margin=1in}	
 	\newcommand{\cnote}[1]{}
 	\newcommand{\pnote}[1]{}
-	\newcommand{\mnote}[1]{}
+	% \newcommand{\mnote}[1]{}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
