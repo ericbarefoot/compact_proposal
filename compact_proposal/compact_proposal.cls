@@ -18,6 +18,7 @@
 % \RequirePackage{floatflt}	%	for wrapping figures
 \RequirePackage{etoolbox}	%	for if-then statements
 	\tracingpatches 		% turn on for debugging patches
+\RequirePackage{xparse}
 \RequirePackage{setspace}	%	easy doublespacing
 \RequirePackage{soul}		%	for colors and highlighting
 \RequirePackage[dvipsnames]{xcolor}	%	for colors
@@ -60,6 +61,23 @@
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
 
+%% Define note functions
+%%
+% make note for margin discussion.
+\NewDocumentCommand{\mmnote}{O{} m}{%
+    \iftoggle{@draft}{%
+        % if draft:
+        {\sethlcolor{lgrey}%
+        \hl{#1}%
+        {\setstretch{1}\todo{#2}}
+        }%
+    }%
+    {%
+        % if not draft:
+        #1%
+    }%
+}%
+
 
 %% Apply the options
 %% 
@@ -69,7 +87,7 @@
 	\doublespacing	% make double spaced.
 	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
-	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}					% make note for margin discussion.
+	\newcommand{\mnote}[2]{\sethlcolor{lgrey} \hl{#1} \todo{#2}}	
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
