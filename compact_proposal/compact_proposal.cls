@@ -100,6 +100,30 @@
     }%
 }%
 
+% make note for citations
+\NewDocumentCommand{\cnote}{O{citation needed}}{%
+	\nottoggle{@nonotes}{%
+    % if not nonotes:
+        \iftoggle{@draft}{%
+        % if draft:
+            % \IfValueTF{#1}%
+            % {% if optional given:
+                \sethlcolor{lgrey}%
+                \hl{#1}%
+            % }%
+            % {% else:
+            	% \sethlcolor{lgrey}%
+            	% \hl{citation needed}
+            % }%
+        }{%
+        % if not draft:
+            % print nothing
+        }%
+    }{%
+    % if nonotes:
+        % print nothing
+    }%
+}
 
 %% Apply the options
 %% 
@@ -107,7 +131,7 @@
 
 \iftoggle{@draft}{%
 	\doublespacing	% make double spaced.
-	\newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
+	% \newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
 	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
@@ -124,13 +148,13 @@
 %	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
 %	and paper size and text size.
 	\geometry{letterpaper, margin=1in}
-	\newcommand{\cnote}[1]{}
+	% \newcommand{\cnote}[1]{}
 	\newcommand{\pnote}[1]{}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
 \iftoggle{@nonotes}{%
-	\renewcommand{\cnote}[1]{}
+	% \renewcommand{\cnote}[1]{}
 	\renewcommand{\pnote}[1]{}
 }{%
 }
