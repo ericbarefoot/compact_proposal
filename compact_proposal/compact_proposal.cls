@@ -106,15 +106,8 @@
     % if not nonotes:
         \iftoggle{@draft}{%
         % if draft:
-            % \IfValueTF{#1}%
-            % {% if optional given:
-                \sethlcolor{lgrey}%
-                \hl{#1}%
-            % }%
-            % {% else:
-            	% \sethlcolor{lgrey}%
-            	% \hl{citation needed}
-            % }%
+            \sethlcolor{lgrey}%
+            \hl{#1}%
         }{%
         % if not draft:
             % print nothing
