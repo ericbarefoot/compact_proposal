@@ -124,8 +124,13 @@
     % if not nonotes:
         \iftoggle{@draft}{%
         % if draft:
+        	\IfNoValueTF{#1}%
+        	% if no value given:
+        	{}{% print nothing
+        	% else print given
             \sethlcolor{GreenYellow}%
             \hl{[#1]}%
+            }%
         }{%
         % if not draft:
             % print nothing
