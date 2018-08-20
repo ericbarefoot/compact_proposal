@@ -118,6 +118,25 @@
     }%
 }
 
+% make note for personal inline notes to self
+\NewDocumentCommand{\pnote}{o}{%
+	\nottoggle{@nonotes}{%
+    % if not nonotes:
+        \iftoggle{@draft}{%
+        % if draft:
+            \sethlcolor{GreenYellow}%
+            \hl{[#1]}%
+        }{%
+        % if not draft:
+            % print nothing
+        }%
+    }{%
+    % if nonotes:
+        % print nothing
+    }%
+}
+
+
 %% Apply the options
 %% 
 \renewcommand{\labelitemi}{\cp@labelitemi}	%	sets a new list delimiter - a star
@@ -125,7 +144,7 @@
 \iftoggle{@draft}{%
 	\doublespacing	% make double spaced.
 	% \newcommand{\cnote}[2][citation needed]{\sethlcolor{lgrey} \hl{[#1:#2]}}		% make note for needed citations. 
-	\newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
+	% \newcommand{\pnote}[1]{\sethlcolor{GreenYellow} \textcolor{black}{\hl{[#1]}}}	% make note for personal notes.
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
@@ -142,13 +161,13 @@
 %	and paper size and text size.
 	\geometry{letterpaper, margin=1in}
 	% \newcommand{\cnote}[1]{}
-	\newcommand{\pnote}[1]{}
+	% \newcommand{\pnote}[1]{}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
 \iftoggle{@nonotes}{%
 	% \renewcommand{\cnote}[1]{}
-	\renewcommand{\pnote}[1]{}
+	% \renewcommand{\pnote}[1]{}
 }{%
 }
 
