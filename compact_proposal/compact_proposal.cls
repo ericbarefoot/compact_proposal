@@ -5,15 +5,15 @@
 
 
 %% Identification %%
-%% 
+%%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{compact_proposal}[2018/02/08 Compact Proposal LaTeX class]
 
 
 
 %% Preliminary declarations
-%% 
-\LoadClass[12pt]{article}
+%%
+\LoadClass{article}
 \RequirePackage{geometry}	%	for margins etc
 % \RequirePackage{floatflt}	%	for wrapping figures
 \RequirePackage{etoolbox}	%	for if-then statements
@@ -25,8 +25,8 @@
 \RequirePackage{graphicx}	%	for figure inclusion
 \RequirePackage{float}		% 	for normal floating
 \RequirePackage[font = footnotesize]{caption}	%	for captions
-\RequirePackage[textsize = footnotesize, 
-				linecolor = gray, 
+\RequirePackage[textsize = footnotesize,
+				linecolor = gray,
 				bordercolor = white,
 				backgroundcolor = white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
@@ -56,7 +56,7 @@
 
 
 %% Define Parameters
-%% 
+%%
 \setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
@@ -85,7 +85,7 @@
                 #1%
             }%
             {% else:
-                %
+                % print nothing
             }%
         }%
     }{%
@@ -95,7 +95,7 @@
                 #1%
             }%
             {% else:
-                %
+                % print nothing
             }%
     }%
 }%
@@ -143,7 +143,7 @@
 
 
 %% Apply the options
-%% 
+%%
 \renewcommand{\labelitemi}{\cp@labelitemi}	%	sets a new list delimiter - a star
 
 \iftoggle{@draft}{%
@@ -178,10 +178,16 @@
 
 
 %% Customize title and evironments/section heads, mostly to be lower profile.
-%%
-\let\@emptyauthor\@author % store the values before TeX processing 
+
+%% @author and @date need to be empty, so this empties both values, stores them
+%% as @emptyauthor and @emptydate and then uses for comparison with what get's called in document. 
+
+\global\let\@author\@empty  % TeX has already filled @date by now, so empty it
+\let\@emptyauthor\@author % store the values before TeX processing
+
 \global\let\@date\@empty  % TeX has already filled @date by now, so empty it
 \let\@emptydate\@date	  % now fill with @date to make @emptydate
+
 \renewcommand{\@maketitle}{%
 	\newpage%
 	% \begingroup
@@ -196,7 +202,7 @@
 			 \end{tabular}%
 			}%
 		\ifdefequal{\@date}{\@emptydate}% if date is *not* given in doc
-			{}% 
+			{}%
 			{\ifdefequal{\@author}{\@emptyauthor}% check if author was given (determine spacing)
 				{\vskip 0.3ex% big skip = 0.3
 				 \@date}%
