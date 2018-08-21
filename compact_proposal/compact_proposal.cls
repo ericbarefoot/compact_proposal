@@ -19,7 +19,6 @@
 \RequirePackage{etoolbox}	%	for if-then statements
 	\tracingpatches 		% turn on for debugging patches
 \RequirePackage{xparse}
-\RequirePackage{xspace}
 \RequirePackage{setspace}	%	easy doublespacing
 \RequirePackage{soul}		%	for colors and highlighting
 \RequirePackage[dvipsnames]{xcolor}	%	for colors
