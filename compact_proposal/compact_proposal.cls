@@ -19,6 +19,7 @@
 \RequirePackage{etoolbox}	%	for if-then statements
 	\tracingpatches 		% turn on for debugging patches
 \RequirePackage{xparse}
+\RequirePackage{xspace}
 \RequirePackage{setspace}	%	easy doublespacing
 \RequirePackage{soul}		%	for colors and highlighting
 \RequirePackage[dvipsnames]{xcolor}	%	for colors
@@ -85,7 +86,7 @@
                 #1%
             }%
             {% else:
-                %
+                \@ifnextchar\ {\hspace{-0.3em}}{}% remove spacing
             }%
         }%
     }{%
@@ -93,6 +94,7 @@
         \IfValueTF{#1}%
             {% if optional given:
                 #1%
+                \@ifnextchar\ {\hspace{-0.3em}}{}% remove spacing
             }%
             {% else:
                 %
@@ -114,6 +116,7 @@
         }%
     }{%
     % if nonotes:
+        \@ifnextchar\ {\hspace{-0.3em}}{}% remove spacing
         % print nothing
     }%
 }
@@ -133,6 +136,7 @@
             }%
         }{%
         % if not draft:
+            \@ifnextchar\ {\hspace{-0.3em}}{}% remove spacing
             % print nothing
         }%
     }{%
