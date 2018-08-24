@@ -195,16 +195,16 @@
 			{}% print nothing
 			{\vskip 0.3ex% big skip = 0.3
 			 \begin{tabular}[t]{c}%
-				 \@author%
+				\footnotesize\@author%
 			 \end{tabular}%
 			}%
 		\ifdefequal{\@date}{\@emptydate}% if date is *not* given in doc
 			{}% 
 			{\ifdefequal{\@author}{\@emptyauthor}% check if author was given (determine spacing)
 				{\vskip 0.3ex% big skip = 0.3
-				 \@date}%
+				 \footnotesize\@date}%
 				{\vskip 0.1ex% small skip = 0.1
-				 \@date}%
+				 \footnotesize\@date}%
 			}%
 	\end{center}%
 	\vspace{\dimexpr-2.5\parsep-2.5\parskip\relax}%
