@@ -2,37 +2,79 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
- 
+
 \usepackage{blindtext}
 
-
 \title{Example of a Compact Proposal}
-% \author{Eric Barefoot}
-% \date{\today}
+\author{Eric Barefoot}
+\date{\today}
 
 \begin{document}
- 
+
 \maketitle
 
-
 \section{This is a section}
-\blindtext[4]
+Is there a difference between this text and some nonsense like ``Huardest gefburn''? Kjift – not at all!
+A blind text like this gives you information about the \mnote{margin note can be used without highlighting} selected font, how the letters are written. A cnote with no arguments is at the end of this sentence\cnote.
+A cnote with optional text is here:\cnote[this is optional cnote text] done!
+This text should contain all letters of the alphabet and it should be written \mnote[This is optionally highlighted mnote text]{This is a margin note.} the original language.
+Pnote is used in this sentence here with no arguments: \pnote and that was it! ...but the length of words \pnote[this is a personal inline note] should match the language.
 
+\subsection{testing mnotes}
 
-\section{This is another section}
-Is there a difference between this text and some nonsense like ``Huardest gefburn''? Kjift – not at all! \cnote[this needs a ref]
-A blind text like this gives you information about the \mnote{margin note can be used without highlighting} selected font, how the letters are written and an impression of the look \cnote.
-This text should contain all letters of the alphabet and it should be written \mnote[in of itself of]{typo! check this stuff!} the original language. 
-There is no \pnote need for special content, but the length of words \pnote[this is a personal inline note] should match the language. 
+This block of text just tests mnotes in a variety of contexts.
+
+This sentence has an mnote with no spaces:\mnote[highlighting this text]{and margin note this text.}.
+
+This sentence has an mnote with space before: \mnote[highlighting this text]{and margin note this text.}.
+
+This sentence has an mnote with space before and after: \mnote[highlighting this text]{and margin note this text.} .
+
+This sentence has an mnote with space after:\mnote[highlighting this text]{and margin note this text.} .
+
+\mnote[This sentence starts]{mnote!} with an mnote highlight.
+
+\subsection{testing pnotes}
+
+This block of text just tests pnotes in a variety of contexts.
+
+This sentence has an pnote with no spaces:\pnote[highlighting this text].
+
+This sentence has an pnote with space before: \pnote[highlighting this text].
+
+This sentence has an pnote with space before and after: \pnote[highlighting this text] .
+
+This sentence has an pnote with space after:\pnote[highlighting this text] .
+
+\pnote[stupid starting...] This sentence starts with an pnote.
+
+\pnote This sentence starts with an pnote with no argument.
+
+\subsection{testing cnotes}
+
+This block of text just tests cnotes in a variety of contexts.
+
+This sentence has an cnote with no spaces:\cnote[highlighting this text].
+
+This sentence has an cnote with space before: \cnote[highlighting this text].
+
+This sentence has an cnote with space before and after: \cnote[highlighting this text] .
+
+This sentence has an cnote with space after:\cnote[highlighting this text] .
+
+\cnote[stupid starting...] This sentence starts with an cnote.
+
+\cnote This sentence starts with an cnote with no argument.
 
 \subsection{A subsection this is}
 \blindtext[1]
 \begin{tightitemize}
-    \item one1
-    \item two
-    \item three
+	\item one1
+	\item two
+	\item three
 \end{tightitemize}
-\blindtext[4]
 
+\section{This is another section}
+\blindtext[6]
 
 \end{document}
