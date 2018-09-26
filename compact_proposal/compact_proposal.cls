@@ -2,18 +2,14 @@
 %%	Eric Barefoot
 %%	Feb 2018
 
-
-
 %% Identification %%
-%% 
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{compact_proposal}[2018/02/08 Compact Proposal LaTeX class]
 
-
-
 %% Preliminary declarations
-%% 
-\LoadClass[12pt]{article}
+
+\LoadClass{article}
 \RequirePackage{geometry}	%	for margins etc
 % \RequirePackage{floatflt}	%	for wrapping figures
 \RequirePackage{etoolbox}	%	for if-then statements
@@ -25,8 +21,8 @@
 \RequirePackage{graphicx}	%	for figure inclusion
 \RequirePackage{float}		% 	for normal floating
 \RequirePackage[font = footnotesize]{caption}	%	for captions
-\RequirePackage[textsize = footnotesize, 
-				linecolor = gray, 
+\RequirePackage[textsize = footnotesize,
+				linecolor = gray,
 				bordercolor = white,
 				backgroundcolor = white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
@@ -37,13 +33,11 @@
 		}
 \RequirePackage{lineno}
 
-
 \newtoggle{@draft}
 \newtoggle{@nonotes}
 
-
 %% Declare the options
-%%
+
 % \DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
 \DeclareVoidOption{draft}{\toggletrue{@draft}}              % allows draft mode
 \DeclareVoidOption{final}{\togglefalse{@draft}}             % allows a final submission mode
@@ -53,16 +47,31 @@
 \DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
 \ProcessKeyvalOptions*
 
-
-
 %% Define Parameters
-%% 
+
 \setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
 \definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
 
-
 %% Define note functions
-%%
+
+% \newcommand*{\myparenthetical}[1]{%
+%   \ifhmode
+%     \unskip
+%     \space
+%   \fi
+%   [#1]%
+%   \@ifnextchar{.}{}{%
+%   \@ifnextchar{,}{}{%
+%   \@ifnextchar{;}{}{%
+%   \@ifnextchar{!}{}{%
+%   \@ifnextchar{?}{}{%
+%   \@ifnextchar{)}{}{%
+%   \@ifnextchar\par{}{%
+%     \space
+%     \ignorespaces
+%   }}}}}}}%
+% }
+
 % make note for margin discussion.
 \NewDocumentCommand{\mnote}{o m}{%
     \nottoggle{@nonotes}{%
@@ -71,32 +80,105 @@
         % if draft:
             \IfValueTF{#1}%
             {% if optional given:
-                \sethlcolor{lgrey}%
-                \hl{#1}%
-                {\setstretch{1}\todo{#2}}%
+							\ifhmode
+								\unskip
+								\space
+							\fi
+						  \sethlcolor{lgrey}%
+              \hl{#1}%
+              {\setstretch{1}\todo{#2}}%
+						  \@ifnextchar{.}{}{%
+						  \@ifnextchar{,}{}{%
+						  \@ifnextchar{;}{}{%
+						  \@ifnextchar{!}{}{%
+						  \@ifnextchar{?}{}{%
+						  \@ifnextchar{)}{}{%
+						  \@ifnextchar\par{}{%
+						    \space
+						    \ignorespaces
+						  }}}}}}}%
             }%
             {% else:
-                {\setstretch{1}\todo{#2}}%
-            }%
+							\ifhmode
+								\unskip
+								\space
+							\fi
+							{\setstretch{1}\todo{#2}}%
+							\ignorespaces
+						}%
         }{%
         % if not draft:
             \IfValueTF{#1}%
             {% if optional given:
-                #1%
+							\ifhmode
+								\unskip
+								\space
+							\fi
+							#1%
+							\@ifnextchar{.}{}{%
+						  \@ifnextchar{,}{}{%
+						  \@ifnextchar{;}{}{%
+						  \@ifnextchar{!}{}{%
+						  \@ifnextchar{?}{}{%
+						  \@ifnextchar{)}{}{%
+						  \@ifnextchar\par{}{%
+						    \space
+						    \ignorespaces
+						  }}}}}}}%
             }%
             {% else:
-                %
+						% print nothing
+							\ifhmode
+								\unskip
+							\fi
+							\@ifnextchar{.}{}{%
+							\@ifnextchar{,}{}{%
+							\@ifnextchar{;}{}{%
+							\@ifnextchar{!}{}{%
+							\@ifnextchar{?}{}{%
+							\@ifnextchar{)}{}{%
+							\@ifnextchar\par{}{%
+								\space
+								\ignorespaces
+							}}}}}}}%
             }%
         }%
     }{%
     % if nonotes:
         \IfValueTF{#1}%
             {% if optional given:
-                #1%
-            }%
+							\ifhmode
+								\unskip
+								\space
+							\fi
+							#1%
+							\@ifnextchar{.}{}{%
+							\@ifnextchar{,}{}{%
+							\@ifnextchar{;}{}{%
+							\@ifnextchar{!}{}{%
+							\@ifnextchar{?}{}{%
+							\@ifnextchar{)}{}{%
+							\@ifnextchar\par{}{%
+								\space
+								\ignorespaces
+							}}}}}}}%
+						}%
             {% else:
-                %
-            }%
+						% print nothing
+						\ifhmode
+							\unskip
+						\fi
+						\@ifnextchar{.}{}{%
+						\@ifnextchar{,}{}{%
+						\@ifnextchar{;}{}{%
+						\@ifnextchar{!}{}{%
+						\@ifnextchar{?}{}{%
+						\@ifnextchar{)}{}{%
+						\@ifnextchar\par{}{%
+							\space
+							\ignorespaces
+						}}}}}}}%
+          }%
     }%
 }%
 
@@ -106,15 +188,55 @@
     % if not nonotes:
         \iftoggle{@draft}{%
         % if draft:
-            \sethlcolor{lgrey}%
-            \hl{#1}%
+					\ifhmode
+						\unskip
+						\space
+					\fi
+					\sethlcolor{lgrey}%
+          \hl{#1}%
+					\@ifnextchar{.}{}{%
+					\@ifnextchar{,}{}{%
+					\@ifnextchar{;}{}{%
+					\@ifnextchar{!}{}{%
+					\@ifnextchar{?}{}{%
+					\@ifnextchar{)}{}{%
+					\@ifnextchar\par{}{%
+						\space
+						\ignorespaces
+					}}}}}}}%
         }{%
         % if not draft:
             % print nothing
+						\ifhmode
+							\unskip
+						\fi
+						\@ifnextchar{.}{}{%
+						\@ifnextchar{,}{}{%
+						\@ifnextchar{;}{}{%
+						\@ifnextchar{!}{}{%
+						\@ifnextchar{?}{}{%
+						\@ifnextchar{)}{}{%
+						\@ifnextchar\par{}{%
+							\space
+							\ignorespaces
+						}}}}}}}%
         }%
     }{%
     % if nonotes:
         % print nothing
+				\ifhmode
+					\unskip
+				\fi
+				\@ifnextchar{.}{}{%
+				\@ifnextchar{,}{}{%
+				\@ifnextchar{;}{}{%
+				\@ifnextchar{!}{}{%
+				\@ifnextchar{?}{}{%
+				\@ifnextchar{)}{}{%
+				\@ifnextchar\par{}{%
+					\space
+					\ignorespaces
+				}}}}}}}%
     }%
 }
 
@@ -126,24 +248,78 @@
         % if draft:
         	\IfNoValueTF{#1}%
         	% if no value given:
-        	{}{% print nothing
+        	{% print nothing
+						\ifhmode
+							\unskip
+						\fi
+						\@ifnextchar{.}{}{%
+						\@ifnextchar{,}{}{%
+						\@ifnextchar{;}{}{%
+						\@ifnextchar{!}{}{%
+						\@ifnextchar{?}{}{%
+						\@ifnextchar{)}{}{%
+						\@ifnextchar\par{}{%
+							\space
+							\ignorespaces
+						}}}}}}}%
+					}{%
         	% else print given
+						\ifhmode
+							\unskip
+							\space
+						\fi
             \sethlcolor{GreenYellow}%
             \hl{[#1]}%
-            }%
+						\@ifnextchar{.}{}{%
+						\@ifnextchar{,}{}{%
+						\@ifnextchar{;}{}{%
+						\@ifnextchar{!}{}{%
+						\@ifnextchar{?}{}{%
+						\@ifnextchar{)}{}{%
+						\@ifnextchar\par{}{%
+							\space
+							\ignorespaces
+						}}}}}}}%
+					}%
         }{%
         % if not draft:
             % print nothing
+						\ifhmode
+							\unskip
+						\fi
+						\@ifnextchar{.}{}{%
+						\@ifnextchar{,}{}{%
+						\@ifnextchar{;}{}{%
+						\@ifnextchar{!}{}{%
+						\@ifnextchar{?}{}{%
+						\@ifnextchar{)}{}{%
+						\@ifnextchar\par{}{%
+							\space
+							\ignorespaces
+						}}}}}}}%
         }%
     }{%
     % if nonotes:
         % print nothing
+				\ifhmode
+					\unskip
+				\fi
+				\@ifnextchar{.}{}{%
+				\@ifnextchar{,}{}{%
+				\@ifnextchar{;}{}{%
+				\@ifnextchar{!}{}{%
+				\@ifnextchar{?}{}{%
+				\@ifnextchar{)}{}{%
+				\@ifnextchar\par{}{%
+					\space
+					\ignorespaces
+				}}}}}}}%
     }%
 }
 
 
 %% Apply the options
-%% 
+
 \renewcommand{\labelitemi}{\cp@labelitemi}	%	sets a new list delimiter - a star
 
 \iftoggle{@draft}{%
@@ -175,13 +351,17 @@
     \RequirePackage{times}
 }{}
 
-
-
 %% Customize title and evironments/section heads, mostly to be lower profile.
-%%
-\let\@emptyauthor\@author % store the values before TeX processing 
+
+%% @author and @date need to be empty, so this empties both values, stores them
+% % as @emptyauthor and @emptydate and then uses for comparison with what get's called in document.
+
+\global\let\@author\@empty  % TeX has already filled @date by now, so empty it
+\let\@emptyauthor\@author % store the values before TeX processing
+
 \global\let\@date\@empty  % TeX has already filled @date by now, so empty it
 \let\@emptydate\@date	  % now fill with @date to make @emptydate
+
 \renewcommand{\@maketitle}{%
 	\newpage%
 	% \begingroup
@@ -196,7 +376,7 @@
 			 \end{tabular}%
 			}%
 		\ifdefequal{\@date}{\@emptydate}% if date is *not* given in doc
-			{}% 
+			{}%
 			{\ifdefequal{\@author}{\@emptyauthor}% check if author was given (determine spacing)
 				{\vskip 0.3ex% big skip = 0.3
 				 \@date}%
@@ -208,14 +388,12 @@
 	\rule[1ex]{\textwidth}{0.5pt}%
 }
 
-
 \renewcommand{\section}{%
 	\@startsection
 	{section}{1}{\z@}{0.5\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\selectfont\centering}%
 }
-
 
 \renewcommand{\subsection}{%
 	\@startsection
@@ -224,20 +402,17 @@
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
 
-
 \newenvironment{tightitemize}{%
 	\begin{itemize}[noitemsep,nolistsep]
 }{%
 	\end{itemize}
 }
 
-
 \newenvironment{tightenum}{%
 	\begin{enumerate}[noitemsep,nolistsep]
 }{%
 	\end{enumerate}
 }
-
 
 \newenvironment{tightcenter}{%
 	\setlength\topsep{0pt}
