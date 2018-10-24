@@ -33,7 +33,7 @@ Sed sed auctor leo. Sed interdum semper lectus id vestibulum.
 Nam non erat ultrices, aliquam diam eu,\mnote{or just make a margin note.} mattis libero.
 ```
 provides the following:
-![example_pic](notes_example.png)
+![example_pic](./private/notes_example.png)
 
 ## Setting up with symbolic links
 
