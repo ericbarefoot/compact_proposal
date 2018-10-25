@@ -50,7 +50,9 @@
 %% Define Parameters
 
 \setcounter{secnumdepth}{0}			%	prevents automatic numbering for sections
-\definecolor{lgrey}{gray}{0.75}		%	make a light grey color for mnotes
+\definecolor{lgrey}{gray}{0.85}		%	make a light grey color for mnotes
+\definecolor{cblue}{RGB}{152,203,244}		%	make a light grey color for mnotes
+\definecolor{pyell}{RGB}{255,255,102}		%	make a light grey color for mnotes
 
 %% Define note functions
 
@@ -192,7 +194,7 @@
 						\unskip
 						\space
 					\fi
-					\sethlcolor{lgrey}%
+					\sethlcolor{cblue}%
           \hl{#1}%
 					\@ifnextchar{.}{}{%
 					\@ifnextchar{,}{}{%
@@ -268,7 +270,7 @@
 							\unskip
 							\space
 						\fi
-            \sethlcolor{GreenYellow}%
+            \sethlcolor{pyell}%
             \hl{[#1]}%
 						\@ifnextchar{.}{}{%
 						\@ifnextchar{,}{}{%

@@ -12,7 +12,7 @@ Call this document class with `\documentclass{compact_proposal}`. It takes the f
 * `final` which single spaces, collapses lists, and makes standard 1 inch margins.
 
 Allowed notes in `draft` mode are:
-* `\cnote` which inputs a grey highlighted text reading 'citation needed' if no arguments are supplied, or optional text if supplied.
+* `\cnote` which inputs a blue highlighted text reading 'citation needed' if no arguments are supplied, or optional text if supplied.
 * `\pnote` which inputs a yellow highlighted text with a note for yourself in it.
 * `\mnote` which highlights text grey, then puts in a margin note and connects the two with a grey line.
 
@@ -33,7 +33,7 @@ Sed sed auctor leo. Sed interdum semper lectus id vestibulum.
 Nam non erat ultrices, aliquam diam eu,\mnote{or just make a margin note.} mattis libero.
 ```
 provides the following:
-![example_pic](notes_example.png)
+![example_pic](./private/notes_example.png)
 
 ## Setting up with symbolic links
 
