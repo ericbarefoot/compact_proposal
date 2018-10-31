@@ -328,18 +328,18 @@
 	\doublespacing	% make double spaced.
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
-		left = 1in,%
+		left = 0.75in,%
+		right = 2in,%
 		top = 1in,%
 		bottom = 1in,%
-		textwidth = \textwidth,%
-		marginparwidth = 2in
+		marginparwidth = 1.5in
 	}%
 %	add line numbers in draft mode
 	\linenumbers
 }{%
 %	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
 %	and paper size and text size.
-	\geometry{letterpaper, margin=1in}
+	\geometry{letterpaper, margin=1in, textwidth=6.5in}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
