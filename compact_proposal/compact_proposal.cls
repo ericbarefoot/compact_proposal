@@ -329,10 +329,9 @@
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
-		right = 2.5in,%
 		top = 1in,%
 		bottom = 1in,%
-		papersize = {10in, 11in},%
+		textwidth = \textwidth%
 		marginparwidth = 2in
 	}%
 %	add line numbers in draft mode
