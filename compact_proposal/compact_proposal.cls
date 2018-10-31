@@ -392,14 +392,21 @@
 
 \renewcommand{\section}{%
 	\@startsection
-	{section}{1}{\z@}{0.5\baselineskip}%
+	{section}{0}{\z@}{0.5\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\selectfont\centering}%
 }
 
 \renewcommand{\subsection}{%
 	\@startsection
-	{subsection}{1}{\z@}{0.2\baselineskip}%
+	{subsection}{0}{\z@}{0.2\baselineskip}%
+	{0.1\baselineskip}%
+	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
+}
+
+\renewcommand{\subsubsection}{%
+	\@startsection
+	{subsubsection}{0}{\z@}{0.2\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
