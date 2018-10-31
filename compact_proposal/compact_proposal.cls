@@ -331,7 +331,7 @@
 		left = 1in,%
 		top = 1in,%
 		bottom = 1in,%
-		textwidth = \textwidth%
+		textwidth = \textwidth,%
 		marginparwidth = 2in
 	}%
 %	add line numbers in draft mode
