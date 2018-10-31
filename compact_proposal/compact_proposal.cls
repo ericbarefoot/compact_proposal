@@ -329,10 +329,9 @@
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 1in,%
-		right = 2.5in,%
 		top = 1in,%
 		bottom = 1in,%
-		papersize = {10in, 11in},%
+		textwidth = \textwidth%
 		marginparwidth = 2in
 	}%
 %	add line numbers in draft mode
@@ -392,14 +391,21 @@
 
 \renewcommand{\section}{%
 	\@startsection
-	{section}{1}{\z@}{0.5\baselineskip}%
+	{section}{0}{\z@}{0.5\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\selectfont\centering}%
 }
 
 \renewcommand{\subsection}{%
 	\@startsection
-	{subsection}{1}{\z@}{0.2\baselineskip}%
+	{subsection}{0}{\z@}{0.2\baselineskip}%
+	{0.1\baselineskip}%
+	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
+}
+
+\renewcommand{\subsubsection}{%
+	\@startsection
+	{subsubsection}{0}{\z@}{0.2\baselineskip}%
 	{0.1\baselineskip}%
 	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
 }
