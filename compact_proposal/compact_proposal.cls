@@ -67,6 +67,14 @@
   \expandafter\xspace\romannumeral-`\x
 }
 
+\newcommand{\dynamicNone}{%
+  \ifhmode
+    \unskip
+  \fi
+  \expandafter\xspace\romannumeral-`\x
+}
+
+
 % make note for margin discussion.
 \NewDocumentCommand{\mnote}{o m}{%
     \nottoggle{@nonotes}{%
@@ -96,9 +104,7 @@
             }%
             {% else:
 				% print nothing
-				\ifhmode
-				    \unskip
-				\fi
+				\dynamicNone
             }%
         }%
     }{%
@@ -111,9 +117,7 @@
             }%
             {% else:
 				% print nothing
-				\ifhmode
-				    \unskip
-				\fi
+				\dynamicNone
             }%
     }%
 }%
@@ -131,16 +135,12 @@
         }{%
         % if not draft:
         % print nothing
-			\ifhmode
-				\unskip
-			\fi
+			\dynamicNone
         }%
     }{%
     % if nonotes:
         % print nothing
-		\ifhmode
-			\unskip
-		\fi
+		\dynamicNone
     }%
 }
 
@@ -166,16 +166,16 @@
         }{%
         % if not draft:
             % print nothing
-			\ifhmode
-				\unskip
-			\fi
+			% \ifhmode
+			% 	\unskip
+			% \fi
+			% \expandafter\xspace\romannumeral-`\x
+			\dynamicNone
         }%
     }{%
     % if nonotes:
         % print nothing
-		\ifhmode
-			\unskip
-		\fi
+		\dynamicNone
     }%
 }
 
