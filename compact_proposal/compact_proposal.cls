@@ -56,23 +56,16 @@
 
 %% Define note functions
 
-% \newcommand*{\myparenthetical}[1]{%
-%   \ifhmode
-%     \unskip
-%     \space
-%   \fi
-%   [#1]%
-%   \@ifnextchar{.}{}{%
-%   \@ifnextchar{,}{}{%
-%   \@ifnextchar{;}{}{%
-%   \@ifnextchar{!}{}{%
-%   \@ifnextchar{?}{}{%
-%   \@ifnextchar{)}{}{%
-%   \@ifnextchar\par{}{%
-%     \space
-%     \ignorespaces
-%   }}}}}}}%
-% }
+% dynamicSpace command is borred from Heiko Oberdiek:
+% https://tex.stackexchange.com/questions/241038/detect-whether-theres-space-before-and-after-macro
+\newcommand{\dynamicSpace}[1]{%
+  \ifhmode
+    \unskip
+    \space
+  \fi
+  #1%
+  \expandafter\xspace\romannumeral-`\x
+}
 
 % make note for margin discussion.
 \NewDocumentCommand{\mnote}{o m}{%
@@ -82,105 +75,46 @@
         % if draft:
             \IfValueTF{#1}%
             {% if optional given:
-							\ifhmode
-								\unskip
-								\space
-							\fi
-						  \sethlcolor{lgrey}%
-              \hl{#1}%
-              {\setstretch{1}\todo{#2}}%
-						  \@ifnextchar{.}{}{%
-						  \@ifnextchar{,}{}{%
-						  \@ifnextchar{;}{}{%
-						  \@ifnextchar{!}{}{%
-						  \@ifnextchar{?}{}{%
-						  \@ifnextchar{)}{}{%
-						  \@ifnextchar\par{}{%
-						    \space
-						    \ignorespaces
-						  }}}}}}}%
+				\sethlcolor{lgrey}%
+				\dynamicSpace{%
+					\hl{#1}%
+					{\setstretch{1}\todo{#2}}%
+				}%
             }%
             {% else:
-							\ifhmode
-								\unskip
-								\space
-							\fi
-							{\setstretch{1}\todo{#2}}%
-							\ignorespaces
-						}%
+				\ifhmode
+				    \unskip
+				\fi
+				{\setstretch{1}\todo{#2}}%
+			}%
         }{%
         % if not draft:
             \IfValueTF{#1}%
             {% if optional given:
-							\ifhmode
-								\unskip
-								\space
-							\fi
-							#1%
-							\@ifnextchar{.}{}{%
-						  \@ifnextchar{,}{}{%
-						  \@ifnextchar{;}{}{%
-						  \@ifnextchar{!}{}{%
-						  \@ifnextchar{?}{}{%
-						  \@ifnextchar{)}{}{%
-						  \@ifnextchar\par{}{%
-						    \space
-						    \ignorespaces
-						  }}}}}}}%
+				\dynamicSpace{#1}%
+				% #1%
             }%
             {% else:
-						% print nothing
-							\ifhmode
-								\unskip
-							\fi
-							\@ifnextchar{.}{}{%
-							\@ifnextchar{,}{}{%
-							\@ifnextchar{;}{}{%
-							\@ifnextchar{!}{}{%
-							\@ifnextchar{?}{}{%
-							\@ifnextchar{)}{}{%
-							\@ifnextchar\par{}{%
-								\space
-								\ignorespaces
-							}}}}}}}%
+				% print nothing
+				\ifhmode
+				    \unskip
+				\fi
             }%
         }%
     }{%
     % if nonotes:
         \IfValueTF{#1}%
+            \IfValueTF{#1}%
             {% if optional given:
-							\ifhmode
-								\unskip
-								\space
-							\fi
-							#1%
-							\@ifnextchar{.}{}{%
-							\@ifnextchar{,}{}{%
-							\@ifnextchar{;}{}{%
-							\@ifnextchar{!}{}{%
-							\@ifnextchar{?}{}{%
-							\@ifnextchar{)}{}{%
-							\@ifnextchar\par{}{%
-								\space
-								\ignorespaces
-							}}}}}}}%
-						}%
+				\dynamicSpace{#1}%
+				% #1%
+            }%
             {% else:
-						% print nothing
-						\ifhmode
-							\unskip
-						\fi
-						\@ifnextchar{.}{}{%
-						\@ifnextchar{,}{}{%
-						\@ifnextchar{;}{}{%
-						\@ifnextchar{!}{}{%
-						\@ifnextchar{?}{}{%
-						\@ifnextchar{)}{}{%
-						\@ifnextchar\par{}{%
-							\space
-							\ignorespaces
-						}}}}}}}%
-          }%
+				% print nothing
+				\ifhmode
+				    \unskip
+				\fi
+            }%
     }%
 }%
 
@@ -190,55 +124,23 @@
     % if not nonotes:
         \iftoggle{@draft}{%
         % if draft:
-					\ifhmode
-						\unskip
-						\space
-					\fi
-					\sethlcolor{cblue}%
-          \hl{#1}%
-					\@ifnextchar{.}{}{%
-					\@ifnextchar{,}{}{%
-					\@ifnextchar{;}{}{%
-					\@ifnextchar{!}{}{%
-					\@ifnextchar{?}{}{%
-					\@ifnextchar{)}{}{%
-					\@ifnextchar\par{}{%
-						\space
-						\ignorespaces
-					}}}}}}}%
+        	\sethlcolor{cblue}%
+				\dynamicSpace{%
+					\hl{[#1]}%
+				}%
         }{%
         % if not draft:
-            % print nothing
-						\ifhmode
-							\unskip
-						\fi
-						\@ifnextchar{.}{}{%
-						\@ifnextchar{,}{}{%
-						\@ifnextchar{;}{}{%
-						\@ifnextchar{!}{}{%
-						\@ifnextchar{?}{}{%
-						\@ifnextchar{)}{}{%
-						\@ifnextchar\par{}{%
-							\space
-							\ignorespaces
-						}}}}}}}%
+        % print nothing
+			\ifhmode
+				\unskip
+			\fi
         }%
     }{%
     % if nonotes:
         % print nothing
-				\ifhmode
-					\unskip
-				\fi
-				\@ifnextchar{.}{}{%
-				\@ifnextchar{,}{}{%
-				\@ifnextchar{;}{}{%
-				\@ifnextchar{!}{}{%
-				\@ifnextchar{?}{}{%
-				\@ifnextchar{)}{}{%
-				\@ifnextchar\par{}{%
-					\space
-					\ignorespaces
-				}}}}}}}%
+		\ifhmode
+			\unskip
+		\fi
     }%
 }
 
@@ -249,73 +151,31 @@
         \iftoggle{@draft}{%
         % if draft:
         	\IfNoValueTF{#1}%
-        	% if no value given:
-        	{% print nothing
-						\ifhmode
-							\unskip
-						\fi
-						\@ifnextchar{.}{}{%
-						\@ifnextchar{,}{}{%
-						\@ifnextchar{;}{}{%
-						\@ifnextchar{!}{}{%
-						\@ifnextchar{?}{}{%
-						\@ifnextchar{)}{}{%
-						\@ifnextchar\par{}{%
-							\space
-							\ignorespaces
-						}}}}}}}%
-					}{%
+        	{% if no value given:
+        	 % print nothing
+				\ifhmode
+					\unskip
+				\fi
+			}{%
         	% else print given
-						\ifhmode
-							\unskip
-							\space
-						\fi
-            \sethlcolor{pyell}%
-            \hl{[#1]}%
-						\@ifnextchar{.}{}{%
-						\@ifnextchar{,}{}{%
-						\@ifnextchar{;}{}{%
-						\@ifnextchar{!}{}{%
-						\@ifnextchar{?}{}{%
-						\@ifnextchar{)}{}{%
-						\@ifnextchar\par{}{%
-							\space
-							\ignorespaces
-						}}}}}}}%
-					}%
+        		\sethlcolor{pyell}%
+				\dynamicSpace{%
+					\hl{[#1]}%
+				}%
+			}%
         }{%
         % if not draft:
             % print nothing
-						\ifhmode
-							\unskip
-						\fi
-						\@ifnextchar{.}{}{%
-						\@ifnextchar{,}{}{%
-						\@ifnextchar{;}{}{%
-						\@ifnextchar{!}{}{%
-						\@ifnextchar{?}{}{%
-						\@ifnextchar{)}{}{%
-						\@ifnextchar\par{}{%
-							\space
-							\ignorespaces
-						}}}}}}}%
+			\ifhmode
+				\unskip
+			\fi
         }%
     }{%
     % if nonotes:
         % print nothing
-				\ifhmode
-					\unskip
-				\fi
-				\@ifnextchar{.}{}{%
-				\@ifnextchar{,}{}{%
-				\@ifnextchar{;}{}{%
-				\@ifnextchar{!}{}{%
-				\@ifnextchar{?}{}{%
-				\@ifnextchar{)}{}{%
-				\@ifnextchar\par{}{%
-					\space
-					\ignorespaces
-				}}}}}}}%
+		\ifhmode
+			\unskip
+		\fi
     }%
 }
 
