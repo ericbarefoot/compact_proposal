@@ -9,10 +9,31 @@
 
 %% Preliminary declarations
 
+\RequirePackage{etoolbox}	%	for if-then statements
+
+\RequirePackage{kvoptions}
+	\SetupKeyvalOptions{%
+		family=cp,
+		prefix=cp@,
+		}
+\newtoggle{@draft}
+\newtoggle{@nonotes}
+
+%% Declare the options
+
+% \DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
+\DeclareVoidOption{draft}{\toggletrue{@draft}}              % allows draft mode
+\DeclareVoidOption{final}{\togglefalse{@draft}}             % allows a final submission mode
+\DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}		    % allow removal of notes
+\DeclareStringOption[$\star$]{labelitemi}[$\star$]			% allow the enum label specification
+\DeclareStringOption{fontspec}								% allow font specification
+\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
+\ProcessKeyvalOptions*
+
 \LoadClass{article}
 \RequirePackage{geometry}	%	for margins etc
 % \RequirePackage{floatflt}	%	for wrapping figures
-\RequirePackage{etoolbox}	%	for if-then statements
+
 	\tracingpatches 		% turn on for debugging patches
 \RequirePackage{xparse}
 \RequirePackage{setspace}	%	easy doublespacing
@@ -26,26 +47,10 @@
 				bordercolor = white,
 				backgroundcolor = white]{todonotes}	%	allows formatting for margin notes
 \RequirePackage{enumitem}	%	allows for customizing lists for compactness
-\RequirePackage{kvoptions}
-	\SetupKeyvalOptions{%
-		family=cp,
-		prefix=cp@,
-		}
+
 \RequirePackage{lineno}
 
-\newtoggle{@draft}
-\newtoggle{@nonotes}
 
-%% Declare the options
-
-% \DeclareOption{margin}{\toggletrue{draft}}	% need to use a keval package to enable the ability to set the margin size.
-\DeclareVoidOption{draft}{\toggletrue{@draft}}              % allows draft mode
-\DeclareVoidOption{final}{\togglefalse{@draft}}             % allows a final submission mode
-\DeclareVoidOption{nonotes}{\toggletrue{@nonotes}}		    % allow removal of notes
-\DeclareStringOption[$\star$]{labelitemi}[$\star$]			% allow the enum label specification
-\DeclareStringOption{fontspec}								% allow font specification
-\DeclareDefaultOption*{\PassOptionsToClass{\CurrentOption}{article}}	%	inherit article class options
-\ProcessKeyvalOptions*
 
 %% Define Parameters
 
