@@ -325,7 +325,7 @@
 \renewcommand{\labelitemi}{\cp@labelitemi}	%	sets a new list delimiter - a star
 
 \iftoggle{@draft}{%
-	\doublespacing	% make double spaced.
+	\linespread{2.0}	% make double spaced.
 %	make a custom page size that allows an extra area for margins.
 	\geometry{%
 		left = 0.75in,%
@@ -340,6 +340,7 @@
 %	sets the paper size and standard 1 inch margins. need to add functionality eventually to be able to set margins
 %	and paper size and text size.
 	\geometry{letterpaper, margin=1in, textwidth=6.5in}
+	\linespread{1.1}
 }
 
 %	allows an option to disable notes entirely, but preserve draft mode
@@ -407,7 +408,7 @@
 	\@startsection
 	{subsubsection}{0}{\z@}{0.2\baselineskip}%
 	{0.1\baselineskip}%
-	{\fontseries{b}\fontshape{it}\selectfont\raggedright}%
+	{\fontseries{b}\small\selectfont\raggedright}%
 }
 
 \newenvironment{tightitemize}{%
